@@ -1,34 +1,78 @@
 <template>
   <div class="login-container">
-    <el-form ref="formRef" :model="form" class="login-form">
+    <el-form ref="formRef" :model="form" class="login-form" :rules="rules">
       <div class="title-container">
         <h3 class="title">用户登录</h3>
       </div>
 
-      <el-form-item>
-        <el-icon style="vertical-align: middle" class="svg-container">
-          <Search />
+      <el-form-item prop="username">
+        <el-icon
+          size="18px"
+          style="vertical-align: middle"
+          class="svg-container"
+        >
+          <User />
         </el-icon>
-        <el-input v-model="form.name" />
+        <el-input v-model="form.username" />
       </el-form-item>
 
-      <el-form-item>
-        <el-icon style="vertical-align: middle" class="svg-container">
-          <Search />
+      <el-form-item prop="password">
+        <el-icon
+          size="18px"
+          style="vertical-align: middle"
+          class="svg-container"
+        >
+          <Lock />
         </el-icon>
-        <el-input v-model="form.password" />
+        <el-input v-model="form.password" :type="passwordType" />
+        <el-icon size="14px" color="#889aa4" @click="changeType"
+          ><View
+        /></el-icon>
       </el-form-item>
 
-      <el-button type="primary" class="login-button" round>登录</el-button>
+      <el-button type="primary" class="login-button" @click="handleLogin" round
+        >登录</el-button
+      >
     </el-form>
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
+import { login } from '@/api/login'
 const form = ref({
-  name: '',
+  username: '',
   password: ''
 })
+const rules = ref({
+  username: [
+    { required: true, message: '请输入账号', trigger: 'blur' },
+    { min: 3, max: 11, message: '账号长度3-11', trigger: 'change' }
+  ],
+  password: [
+    { required: true, message: '请输入账号', trigger: 'blur' },
+    { min: 3, max: 11, message: '账号长度3-11', trigger: 'change' }
+  ]
+})
+const formRef = ref(null)
+const handleLogin = async () => {
+  if (!formRef) return
+  await (formRef.value as any).validate((valid: any) => {
+    if (valid) {
+      console.log('submit!')
+      login(form.value)
+    } else {
+      console.log('error submit!')
+    }
+  })
+}
+const passwordType = ref('password')
+const changeType = () => {
+  if (passwordType.value === 'password') {
+    passwordType.value = 'text'
+  } else {
+    passwordType.value = 'password'
+  }
+}
 </script>
 <style lang="scss" scoped>
 $bg: #2d3a4b;
