@@ -38,7 +38,9 @@
 </template>
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-import { login } from '@/api/login'
+import { useStore } from 'vuex'
+const store = useStore()
+//import { login } from '@/api/login'
 const form = ref({
   username: '',
   password: ''
@@ -59,9 +61,11 @@ const handleLogin = async () => {
   await (formRef.value as any).validate((valid: any) => {
     if (valid) {
       console.log('submit!')
-      login(form.value)
+      store.dispatch('app/login', form.value)
+      //login(form.value)
     } else {
       console.log('error submit!')
+      return false
     }
   })
 }
