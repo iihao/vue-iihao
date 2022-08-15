@@ -1,10 +1,10 @@
 <template>
   <el-container class="app-wrapper">
-    <el-aside width="200px" class="sidebar-container">
+    <el-aside class="sidebar-container">
       <Menu />
     </el-aside>
     <el-container class="container">
-      <el-header>Header</el-header>
+      <el-header><Headers></Headers></el-header>
       <el-main><router-view></router-view></el-main>
     </el-container>
   </el-container>
@@ -12,11 +12,14 @@
 
 <script setup lang="ts">
 import Menu from './Menu/index.vue'
-import { computed } from 'vue'
-import { useStore } from 'vuex'
+import Headers from './Headers/index.vue'
+import { ref } from 'vue'
 </script>
 
 <style lang="scss" scoped>
+.sidebar-container {
+  width: $sideBarWidth;
+}
 .app-container {
   position: relative;
   width: 100%;
