@@ -33,10 +33,11 @@ service.interceptors.response.use(
   (response: AxiosResponse) => {
     const { data, meta } = response.data
     if (meta.status === 200 || meta.status === 201) {
+      if(meta.msg === '登录成功'){
       ElMessage({
         message: meta.msg,
         type: 'success'
-      })
+      })}
       console.log(data)
       return data
     } else {

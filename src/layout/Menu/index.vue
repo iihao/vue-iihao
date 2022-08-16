@@ -6,9 +6,13 @@
     :default-active="defaultActive"
     unique-opened
     router
+    :collapse="!store.getters.siderType"
   >
-    <div class="logo">
-      <Hamburger />
+    <div class="sidebar-logo">
+      <el-row>
+        <el-col :span="20" class="logo"> <Logo /></el-col>
+        <el-col :span="4" class="hamburger"> <Hamburger /></el-col>
+      </el-row>
     </div>
     <el-sub-menu
       :index="item.path"
@@ -35,7 +39,10 @@
 <script setup lang="ts">
 import { menuList } from '@/api/menu'
 import { ref } from 'vue'
+import { useStore } from 'vuex'
+const store = useStore()
 import Hamburger from './components/hamburger.vue'
+import Logo from './components/logo.vue'
 const defaultActive = ref(localStorage.getItem('activePath') || '/users')
 const saveActive = (path: any) => {
   localStorage.setItem('activePath', `/${path}`)
@@ -51,9 +58,22 @@ const iconList = ref(['user', 'setting', 'shop', 'tickets', 'pie-chart'])
 const iconCoin = ref('coin')
 </script>
 <style lang="scss" scoped>
-.logo {
-  height: 50px;
-  padding: 10px 5px;
-  display: flex;
+.el-row {
+  height: 60px;
+  width: 100%;
+  box-shadow: 0 1px 2px rgb(136 136 136 / 5%);
+  border-bottom: 1px solid #6d6d6d;
+}
+.el-col {
+  align-self: center;
+  margin-left: auto;
+}
+.hanburger {
+  align-self: center;
+  margin-left: auto;
+  height: 100%;
+  &:hover {
+    background-color: bisque;
+  }
 }
 </style>
