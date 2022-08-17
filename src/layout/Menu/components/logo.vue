@@ -10,7 +10,7 @@
 import { useStore } from 'vuex'
 import { ref } from 'vue'
 const store = useStore()
-const logoUrl = 'https://www.baidu.com/img/flexible/logo/pc/result@2.png'
+const logoUrl = require('@/assets/element.png')
 const fit = ref('scale-down')
 </script>
 

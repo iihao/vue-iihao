@@ -1,10 +1,16 @@
 <template>
   <div class="navbar">
-    <breadcrumb />
+    <Breadcrumb />
+    <div class="navbar-right">
+      <Lang class="navbar-item" />
+      <Avatar class="navbar-item" />
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
-import breadcrumb from './components/breadcrumb.vue'
+import Breadcrumb from './components/breadcrumb.vue'
+import Avatar from './components/avatar.vue'
+import Lang from './components/lang.vue'
 </script>
 <style lang="scss" scoped>
 .navbar {
@@ -20,6 +26,7 @@ import breadcrumb from './components/breadcrumb.vue'
   box-sizing: border-box;
   position: relative;
   .navbar-right {
+    padding-right: 24px;
     flex: 1;
     display: flex;
     align-items: center;

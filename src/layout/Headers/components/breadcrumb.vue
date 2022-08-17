@@ -1,7 +1,14 @@
 <template>
   <el-breadcrumb separator="/">
     <el-breadcrumb-item v-for="(item, index) in breadList" :key="index">
-      {{ item.name }}
+      <span
+        v-if="index === breadList.length - 1"
+        style="color: rgb(142 142 142)"
+        >{{ $t(`menus.${String(item.name)}`) }}</span
+      >
+      <span v-else style="color: #ddd">{{
+        $t(`menus.${String(item.name)}`)
+      }}</span>
     </el-breadcrumb-item>
   </el-breadcrumb>
 </template>

@@ -1,6 +1,12 @@
 <template>
   <div class="login-container">
-    <el-form ref="formRef" :model="form" class="login-form" :rules="rules">
+    <el-form
+      ref="formRef"
+      :model="form"
+      class="login-form"
+      :rules="rules"
+      @submit.native.prevent
+    >
       <div class="title-container">
         <h3 class="title">用户登录</h3>
       </div>
@@ -30,7 +36,12 @@
         /></el-icon>
       </el-form-item>
 
-      <el-button type="primary" class="login-button" @click="handleLogin" round
+      <el-button
+        type="primary"
+        class="login-button"
+        @click="handleLogin"
+        native-type="“submit”"
+        round
         >登录</el-button
       >
     </el-form>

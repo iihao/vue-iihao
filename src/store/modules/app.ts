@@ -4,8 +4,9 @@ import { setTokenTime } from '@/utils/auth'
 export default {
     namespaced:true,
     state :() =>({
-        token : localStorage.getItem('token'),
-        siderType:true
+        token : localStorage.getItem('token') || '',
+        siderType:true,
+        lang : localStorage.getItem('lang') || 'zh'
     }),
     mutations : {
         setToken(state : any ,token: string){
@@ -14,6 +15,10 @@ export default {
         },
         changeSiderType(state:any){
             state.siderType = !state.siderType 
+        },
+        changeLang(state :any,lang:string){
+            state.lang = lang
+            localStorage.setItem('lang',lang)
         }
     },
     actions:{
