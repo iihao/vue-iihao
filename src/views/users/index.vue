@@ -26,9 +26,13 @@ const tableData = ref([])
 const queryForm = ref({
   query: '',
   pagenum: 1,
-  pagesize: 2
+  pagesize: 4
 })
-console.log(getUserList(queryForm.value))
+const initUserList = async () => {
+  const res = await getUserList(queryForm.value)
+  console.log(res)
+}
+initUserList()
 </script>
 
 <style lang="scss" scoped></style>
