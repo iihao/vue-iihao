@@ -12,9 +12,12 @@
     </el-row>
 
     <el-table :data="tableData" stripe style="width: 100%,padding-top:15px">
-      <el-table-column prop="date" label="Date" width="180" />
-      <el-table-column prop="name" label="Name" width="180" />
-      <el-table-column prop="address" label="Address" />
+      <el-table-column
+        :prop="item.prop"
+        :label="item.lable"
+        v-for="(item, index) in options"
+        :key="index"
+      />
     </el-table>
   </el-card>
 </template>
@@ -22,6 +25,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { getUserList } from '@/api/user'
+import { options } from './options'
 const tableData = ref([])
 const queryForm = ref({
   query: '',
