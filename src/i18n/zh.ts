@@ -29,7 +29,9 @@ export default {
     action: '操作',
     search: '搜索',
     adduser: '添加用户',
-    placeholder: '请输入搜索的用户姓名'
+    placeholder: '请输入搜索的用户姓名',
+    cancel:'取消',
+    confirm:'确定'
   },
   message: {
     updeteSuccess: '更新成功'

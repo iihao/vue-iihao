@@ -1,8 +1,5 @@
 export const options = [
-    {
-        lable:'id',
-        prop:'id'
-    },
+  
     {
         lable:'username',
         prop:'username'
@@ -13,18 +10,25 @@ export const options = [
     },
     {
         lable:'mobile',
-        prop:'mobile'
+        prop:'mobile',
+        
     },
     {
         lable:'email',
-        prop:'email'
+        prop:'email',
+        width:200
     },
     {
         lable:'create_time',
         prop:'create_time'
     },
     {
+        lable:'mg_state',
+        prop:'mg_state'
+    },
+    {
         lable:'action',
-        prop:'action'
+        prop:'action',
+        width:200
     },
 ]

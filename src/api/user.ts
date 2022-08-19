@@ -6,6 +6,20 @@ export const getUserList:any = (params:any) =>{
         method:'get',
         params
 })
+}
+
+export const changeUserState:any = (uId:number,type:any) =>{
+    return request({
+        url:`/users/${uId}/state/${type}`,
+        method:'put'
+    })
 
 }
 
+export const addUserList:any = (data:any) => {
+    return request({
+        url:'/users',
+        method:'post',
+        data
+    })
+}
