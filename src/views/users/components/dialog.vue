@@ -7,6 +7,7 @@
   >
     <span>
       <el-form
+        ref="formRef"
         :rules="rules"
         label-position="left"
         label-width="100px"
@@ -41,13 +42,17 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { addUserList } from '@/api/user'
+import { ElMessage } from 'element-plus'
+import { useI18n } from 'vue-i18n'
+const i18n = useI18n()
+const formRef = ref(null)
 const formLabelAlign = ref({
   username: '',
   password: '',
   email: '',
   mobile: ''
 })
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits(['update:modelValue', 'updateUserList'])
 const props = defineProps<{
   modelValue: boolean
   title: string
@@ -56,9 +61,22 @@ const props = defineProps<{
 const handleClose = () => {
   emits('update:modelValue', false)
 }
-const handleConfirm = () => {
-  addUserList(formLabelAlign.value)
-  handleClose()
+const handleConfirm = async () => {
+  if (!formRef) return
+  await (formRef.value as any).validate((valid: any) => {
+    if (valid) {
+      addUserList(formLabelAlign.value)
+      handleClose()
+      ElMessage({
+        message: i18n.t('message.updeteSuccess'),
+        type: 'success'
+      })
+      emits('updateUserList')
+    } else {
+      console.log('error submit!')
+      return false
+    }
+  })
 }
 
 const rules = ref({

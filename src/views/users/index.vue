@@ -57,7 +57,11 @@
       @current-change="handleCurrentChange"
     />
   </el-affix>
-  <Dialog v-model="dialogVisible" :title="addUserTitle" />
+  <Dialog
+    v-model="dialogVisible"
+    :title="addUserTitle"
+    @updateUserList="initUserList"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -77,13 +81,14 @@ const queryForm = ref({
   pagenum: 1,
   pagesize: 10
 })
+/*
 watch(
   dialogVisible,
   async (newDv) => {
     return await initUserList(), console.log(newDv)
   },
   { deep: true }
-)
+)*/
 
 const initUserList = async () => {
   const res = await getUserList(queryForm.value)
