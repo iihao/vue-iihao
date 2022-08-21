@@ -34,7 +34,8 @@ export default {
     confirm:'Confirm'
   },
   message: {
-    updeteSuccess: 'update successfully'
+    updeteSuccess: 'update successfully',
+    deleteSuccess:'delete successfully'
   },
   driver: {
     doneBtnText: 'done',

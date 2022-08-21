@@ -23,3 +23,10 @@ export const addUserList:any = (data:any) => {
         data
     })
 }
+
+export const deleteUser:any = (uId:number) =>{
+    return request({
+        url:`users/${uId}`,
+        method:'delete'
+    })
+}

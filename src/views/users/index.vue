@@ -29,17 +29,17 @@
         <template v-slot="{ row }" v-if="item.prop == 'mg_state'">
           <el-switch v-model="row.mg_state" @change="changeUser(row)" />
         </template>
-        <template v-slot="{ row }" v-if="item.prop == 'create_time'">
+        <template v-slot="{ row }" v-else-if="item.prop == 'create_time'">
           {{ $filters.formatTimes(row.create_time) }}
         </template>
-        <template #default v-else-if="item.prop == 'action'">
+        <template v-slot="{ row }" v-else-if="item.prop == 'action'">
           <el-button type="primary" size="small"
             ><el-icon><Edit /></el-icon
           ></el-button>
           <el-button type="warning" size="small"
             ><el-icon><Setting /></el-icon
           ></el-button>
-          <el-button type="danger" size="small"
+          <el-button type="danger" size="small" @click="handleDel(row)"
             ><el-icon><Delete /></el-icon
           ></el-button>
         </template>
@@ -66,7 +66,7 @@
 
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
-import { getUserList, changeUserState } from '@/api/user'
+import { getUserList, changeUserState, deleteUser } from '@/api/user'
 import { options } from './options'
 import { ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n'
@@ -106,7 +106,13 @@ const handleCurrentChange = (pagen: number) => {
   queryForm.value.pagenum = pagen
   initUserList()
 }
-
+const handleDel = async (info: any) => {
+  await deleteUser(info.id)
+  ElMessage({
+    message: i18n.t('message.deleteSuccess'),
+    type: 'success'
+  })
+}
 const changeUser = async (info: any) => {
   await changeUserState(info.id, info.mg_state)
   ElMessage({

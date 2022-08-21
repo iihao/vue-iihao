@@ -34,7 +34,8 @@ export default {
     confirm:'确定'
   },
   message: {
-    updeteSuccess: '更新成功'
+    updeteSuccess: '更新成功',
+    deleteSuccess:'删除成功'
   },
   driver: {
     doneBtnText: '完成',
