@@ -112,6 +112,7 @@ const handleDel = async (info: any) => {
     message: i18n.t('message.deleteSuccess'),
     type: 'success'
   })
+  initUserList()
 }
 const changeUser = async (info: any) => {
   await changeUserState(info.id, info.mg_state)
