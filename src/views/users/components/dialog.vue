@@ -17,7 +17,7 @@
         <el-form-item label="用户" prop="username">
           <el-input v-model="formLabelAlign.username" />
         </el-form-item>
-        <el-form-item label="密码" prop="password">
+        <el-form-item label="密码" prop="password" v-if="title == '新增用户'">
           <el-input v-model="formLabelAlign.password" type="password" />
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
@@ -40,38 +40,41 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { addUserList } from '@/api/user'
+import { ref, watch } from 'vue'
+import { addUserList, updateUser } from '@/api/user'
 import { ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n'
 const i18n = useI18n()
 const formRef = ref(null)
-const formLabelAlign = ref({
+let formLabelAlign: any = ref({
   username: '',
   password: '',
   email: '',
   mobile: ''
 })
-const emits = defineEmits(['update:modelValue', 'updateUserList'])
+const emits = defineEmits(['update:modelValue', 'reUserList'])
 const props = defineProps<{
   modelValue: boolean
   title: string
+  dialogTableValue: object
 }>()
 
 const handleClose = () => {
   emits('update:modelValue', false)
 }
-const handleConfirm = async () => {
+const handleConfirm = () => {
   if (!formRef) return
-  await (formRef.value as any).validate((valid: any) => {
+  ;(formRef.value as any).validate(async (valid: any) => {
     if (valid) {
-      addUserList(formLabelAlign.value)
+      props.title == '新增用户'
+        ? await addUserList(formLabelAlign.value)
+        : await updateUser(formLabelAlign.value)
       handleClose()
       ElMessage({
         message: i18n.t('message.updeteSuccess'),
         type: 'success'
       })
-      emits('updateUserList')
+      emits('reUserList')
     } else {
       console.log('error submit!')
       return false
@@ -98,5 +101,13 @@ const rules = ref({
   ],
   mobile: [{ required: true, message: '手机号必填', trigger: 'blur' }]
 })
+
+watch(
+  () => props.dialogTableValue,
+  () => {
+    formLabelAlign.value = props.dialogTableValue
+  },
+  { deep: true, immediate: true }
+)
 </script>
 <style lang="scss" scoped></style>

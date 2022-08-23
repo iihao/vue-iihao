@@ -13,7 +13,7 @@
         <el-icon style="vertical-align: middle"> <Search /> </el-icon>
         <span> {{ $t('table.search') }} </span></el-button
       >
-      <el-button type="primary" @click="handleDialog">{{
+      <el-button type="primary" @click="handleDialog(null)">{{
         $t('table.adduser')
       }}</el-button>
     </el-row>
@@ -33,7 +33,7 @@
           {{ $filters.formatTimes(row.create_time) }}
         </template>
         <template v-slot="{ row }" v-else-if="item.prop == 'action'">
-          <el-button type="primary" size="small"
+          <el-button type="primary" size="small" @click="handleDialog(row)"
             ><el-icon><Edit /></el-icon
           ></el-button>
           <el-button type="warning" size="small"
@@ -53,6 +53,7 @@
       :page-sizes="[5, 10, 20, 30]"
       layout="total, sizes, prev, pager, next, jumper"
       :total="tableTotal"
+      background
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     />
@@ -60,7 +61,8 @@
   <Dialog
     v-model="dialogVisible"
     :title="addUserTitle"
-    @updateUserList="initUserList"
+    @reUserList="initUserList()"
+    :dialogTableValue="dialogTableValue"
   />
 </template>
 
@@ -71,11 +73,13 @@ import { options } from './options'
 import { ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n'
 import Dialog from './components/dialog.vue'
+import { isNull } from '@/utils/filters'
 const i18n = useI18n()
 const tableData = ref([])
 const tableTotal = ref(0)
 const dialogVisible = ref(false)
 const addUserTitle = ref('')
+const dialogTableValue = ref({})
 const queryForm = ref({
   query: '',
   pagenum: 1,
@@ -122,8 +126,15 @@ const changeUser = async (info: any) => {
   })
 }
 
-const handleDialog = () => {
-  addUserTitle.value = '新增用户'
+const handleDialog = (info: any) => {
+  if (isNull(info)) {
+    addUserTitle.value = '新增用户'
+    dialogTableValue.value = {}
+  } else {
+    //updateUser(info.id)
+    addUserTitle.value = '修改用户'
+    dialogTableValue.value = JSON.parse(JSON.stringify(info))
+  }
   dialogVisible.value = true
 }
 </script>
